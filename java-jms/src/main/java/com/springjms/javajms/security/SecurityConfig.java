@@ -5,10 +5,14 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.password.NoOpPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.provisioning.InMemoryUserDetailsManager;
+import org.springframework.security.provisioning.JdbcUserDetailsManager;
 import org.springframework.security.web.SecurityFilterChain;
+
+import javax.sql.DataSource;
 
 import static org.springframework.security.config.Customizer.withDefaults;
 
@@ -26,35 +30,13 @@ public class SecurityConfig {
         http.httpBasic(withDefaults());*/
         return http.build();
     }
+    // need to remove the UserDetailsService bean initialization otherwise it use spring default users table credentials
+    // to use custom userdetails service we have to implement UserDetailsService  interface
+    // if we use multiple bean then it will give error No AuthenticationProvider found for org.springframework.security.authentication.UsernamePasswordAuthenticationToken
     /*@Bean
-    public InMemoryUserDetailsManager userDetailsManager(){
-        UserDetails admin = User.withDefaultPasswordEncoder()
-                .username("admin")
-                .password("pass01")
-                .authorities("admin")
-                .build();
-        UserDetails user = User.withDefaultPasswordEncoder()
-                .username("gautam")
-                .password("pass02")
-                .authorities("view")
-                .build();
-        return new InMemoryUserDetailsManager(admin,user);
-
+    public UserDetailsService userDetailsService(DataSource dataSource) {
+        return new JdbcUserDetailsManager(dataSource);
     }*/
-
-    @Bean
-    public InMemoryUserDetailsManager userDetailsManager(){
-        UserDetails admin = User.withUsername("admin")
-                .password("pass01")
-                .authorities("admin")
-                .build();
-        UserDetails user = User.withUsername("gautam")
-                .password("pass02")
-                .authorities("view")
-                .build();
-        return new InMemoryUserDetailsManager(admin,user);
-
-    }
     @Bean
     public static NoOpPasswordEncoder passwordEncoder() {
         return (NoOpPasswordEncoder) NoOpPasswordEncoder.getInstance();
