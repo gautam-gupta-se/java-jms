@@ -11,11 +11,9 @@
 below  security config is used for in memory spring security Authentication.
 ###############################################################################
 
-/*@Bean
+@Bean
     public InMemoryUserDetailsManager userDetailsService() {
-        *//*Approach 1 where we use withDefaultPasswordEncoder() method
-		while creating the user details*//*
-        *//*UserDetails admin = User.withDefaultPasswordEncoder()
+        UserDetails admin = User.withDefaultPasswordEncoder()
                 .username("admin")
                 .password("12345")
                 .authorities("admin")
@@ -25,10 +23,8 @@ below  security config is used for in memory spring security Authentication.
                 .password("12345")
                 .authorities("read")
                 .build();
-        return new InMemoryUserDetailsManager(admin, user);*//*
-
-         *//*Approach 2 where we use NoOpPasswordEncoder Bean
-		while creating the user details*//*
+        return new InMemoryUserDetailsManager(admin, user);
+----------------------------------OR-----------------------------
         UserDetails admin = User.withUsername("admin")
                 .password("12345")
                 .authorities("admin")
@@ -39,5 +35,5 @@ below  security config is used for in memory spring security Authentication.
                 .build();
         return new InMemoryUserDetailsManager(admin, user);
 
-    }*/
+    }
     ###############################################################
