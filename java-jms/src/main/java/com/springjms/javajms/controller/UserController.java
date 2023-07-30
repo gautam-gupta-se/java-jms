@@ -20,15 +20,6 @@ public class UserController {
         this.userService = userService;
     }
 
-    @PostMapping("/register")
-    public ResponseEntity<User> registerUser(@RequestBody User user) {
-        User existingUser = userService.getUserByUsername(user.getUsername());
-        if (existingUser != null) {
-            return new ResponseEntity<>(HttpStatus.CONFLICT); // Username already exists
-        }
-        User registeredUser = userService.registerUser(user);
-        return new ResponseEntity<>(registeredUser, HttpStatus.CREATED);
-    }
     @GetMapping("/msg")
     public String op(){
         System.out.println(repo.findAll());
@@ -39,13 +30,6 @@ public class UserController {
         System.out.println(repo.findAll());
         return "Hello demo API un authenticated";
     }
-    @GetMapping("/user/{username}")
-    public ResponseEntity<User> getUser(@PathVariable("username") String username) {
-        System.out.println(username);
-        User existingUser = userService.getUserByUsername(username);
-        System.out.println(existingUser);
-        System.out.println(userService.getAllUser());
 
-        return new ResponseEntity<>(existingUser, HttpStatus.OK);
-    }
+
 }
