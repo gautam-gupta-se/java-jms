@@ -7,9 +7,9 @@
 
 
 
-###############################################################################
+#################################
 below  security config is used for in memory spring security Authentication.
-###############################################################################
+#################################
 
 @Bean
     public InMemoryUserDetailsManager userDetailsService() {
@@ -36,4 +36,4 @@ below  security config is used for in memory spring security Authentication.
         return new InMemoryUserDetailsManager(admin, user);
 
     }
-    ###############################################################
+    ##################################
