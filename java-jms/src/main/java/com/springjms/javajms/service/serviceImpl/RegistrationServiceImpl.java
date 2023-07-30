@@ -1,7 +1,8 @@
 package com.springjms.javajms.service.serviceImpl;
 
+import com.springjms.javajms.entity.CustomerEntity;
 import com.springjms.javajms.entity.User;
-import com.springjms.javajms.repository.UserRepository;
+import com.springjms.javajms.repository.CustomerRepository;
 import com.springjms.javajms.service.RegistrationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -12,25 +13,17 @@ import java.util.List;
 @Service
 public class RegistrationServiceImpl implements RegistrationService {
 
-    private final UserRepository userRepository;
     private final BCryptPasswordEncoder passwordEncoder;
+    CustomerRepository customerRepository;
 
     @Autowired
-    public RegistrationServiceImpl(UserRepository userRepository) {
-        this.userRepository = userRepository;
+    public RegistrationServiceImpl(CustomerRepository customerRepository) {
+        this.customerRepository = customerRepository;
         this.passwordEncoder = new BCryptPasswordEncoder();
     }
 
-    public User registerUser(User user) {
-        String encodedPassword = passwordEncoder.encode(user.getEncodedPassword());
-        user.setEncodedPassword(encodedPassword);
-        return userRepository.save(user);
-    }
-
-    public User getUserByUsername(String username) {
-        return userRepository.findByUsername(username);
-    }
-    public List<User> getAllUser(){
-        return userRepository.findAll();
+    @Override
+    public CustomerEntity registerCustomer(CustomerEntity entity) {
+        return customerRepository.save(entity);
     }
 }
