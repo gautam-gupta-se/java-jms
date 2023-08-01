@@ -24,6 +24,9 @@ public class RegistrationServiceImpl implements RegistrationService {
 
     @Override
     public CustomerEntity registerCustomer(CustomerEntity entity) {
+        String plainPwd = entity.getPassword();
+        String hashedPwd = passwordEncoder.encode(plainPwd);
+        entity.setPassword(hashedPwd);
         return customerRepository.save(entity);
     }
 }

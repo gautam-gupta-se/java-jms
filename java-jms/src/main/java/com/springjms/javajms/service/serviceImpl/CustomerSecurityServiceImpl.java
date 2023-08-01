@@ -27,7 +27,7 @@ public class CustomerSecurityServiceImpl implements CustomerSecurityService {
         List<CustomerEntity> customer = customerRepository.findByEmail(username);
         if (customer.size() == 0) {
             System.out.println("user not found");
-            throw new UsernameNotFoundException("User details not found for the user : " + username);
+            throw new UsernameNotFoundException("Provide User not found user : " + username);
         } else{
             userName = customer.get(0).getEmail();
             password = customer.get(0).getPassword();
